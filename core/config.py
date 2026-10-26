@@ -1,1 +1,13 @@
 
+
+"""Limits and thresholds for PDF processing."""
+
+MAX_FILE_MB = 50
+MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024
+MAX_PAGES = 300
+MAX_FILES = 10
+
+MIN_CHARS_PER_PAGE = 50
+MIN_TOTAL_CHARS = 100
+
+MAX_METADATA_CHARS = 300
