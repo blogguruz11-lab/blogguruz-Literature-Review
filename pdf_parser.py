@@ -11,6 +11,8 @@ from pypdf import PasswordType, PdfReader
 from pypdf.errors import DependencyError
 
 from . import config
+print("CONFIG FILE:", config.__file__)
+print("CONFIG SETTINGS:", dir(config))
 from .errors import (
     EmptyFileError, FileTooLargeError, InvalidPDFError, NoPagesError, NoTextError,
     PasswordProtectedError, TooManyPagesError, UnsupportedPDFError,
