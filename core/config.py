@@ -38,6 +38,7 @@ MAX_FINDINGS = 8
 MAX_LIMITATIONS = 5
 
 MAX_RESEARCH_QUESTION_CHARS = 2000
+API_TIMEOUT_SECONDS = 120
 
 # Bump whenever the extraction prompt or output schema changes, so cached
 # results from older versions are not reused.
