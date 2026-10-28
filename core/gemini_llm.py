@@ -1,8 +1,7 @@
-
 """Gemini API client using the existing LLM interface."""
 
-
 from core.llm import LLMError, LLMReply
+
 
 class GeminiLLM:
     def __init__(self, api_key: str, model: str, timeout: float = 120):
@@ -37,7 +36,7 @@ class GeminiLLM:
 
             return LLMReply(text=text, truncated=truncated)
 
-       except Exception as exc:
-    raise LLMError(
-        f"Gemini API request failed: {str(exc)[:500]}"
-    ) from None
+        except Exception as exc:
+            raise LLMError(
+                f"Gemini API request failed: {str(exc)[:500]}"
+            ) from None
