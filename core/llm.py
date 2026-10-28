@@ -39,11 +39,17 @@ _MESSAGES = {
 
 
 def to_llm_error(exc: Exception) -> LLMError:
-    """Turn any SDK exception into a safe message, choosing the most specific class name."""
+    """Convert SDK exceptions into safe, useful error messages."""
     for cls in type(exc).__mro__:
         if cls.__name__ in _MESSAGES:
-            return LLMError(_MESSAGES[cls.__name__])
-    return LLMError("The API request failed. Try again.")
+            return LLMError(
+                f"{_MESSAGES[cls.__name__]} (Error type: {type(exc).__name__})"
+            )
+    return LLMError(
+        f"The API request failed. Error type: {type(exc).__name__}. "
+        "Check the API key, billing, and model settings."
+    )
+
 
 
 class AnthropicLLM:
