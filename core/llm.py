@@ -68,7 +68,12 @@ class AnthropicLLM:
                 model=self.model, max_tokens=max_tokens, system=system,
                 messages=[{"role": "user", "content": user}],
             )
+     
         except Exception as exc:
+            if type(exc).__name__ == "BadRequestError":
+                raise LLMError(
+                    "Diagnostic error: " + str(exc)[:500]
+                ) from None
             raise to_llm_error(exc) from None
         text = "".join(getattr(b, "text", "") for b in response.content
                        if getattr(b, "type", "") == "text")
