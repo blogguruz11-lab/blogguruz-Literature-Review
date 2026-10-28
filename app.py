@@ -18,7 +18,8 @@ from core.errors import PDFProcessingError
 from core.extraction_models import FAILED, SKIPPED, EvidenceItem, ExtractionResult
 from core.extractor import Extractor, prepare_request, size_limit_result
 from core.inputs import clean_research_question
-from core.llm import AnthropicLLM, LLMError
+from core.llm import LLMError
+from core.gemini_llm import GeminiLLM
 from core.pdf_parser import parse_pdf
 from core.verification import NOT_FOUND, TOO_SHORT, VERIFIED, WRONG_PAGE
 
