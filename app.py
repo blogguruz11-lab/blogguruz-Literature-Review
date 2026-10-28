@@ -275,7 +275,7 @@ api_key = get_secret("GEMINI_API_KEY")
     if st.button("Extract evidence", type="primary",
                  disabled=not (consent and api_key and pending)):
         try:
-            extractor = Extractor(AnthropicLLM(api_key, model, config.API_TIMEOUT_SECONDS))
+            extractor = Extractor(GeminiLLM(api_key, model, config.API_TIMEOUT_SECONDS))
         except LLMError as exc:
             st.error(exc.user_message)
             return
