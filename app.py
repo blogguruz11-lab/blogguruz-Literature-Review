@@ -269,7 +269,7 @@ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) ->
         st.write("Nothing waiting to be extracted for the current papers and research question.")
 
     consent = st.checkbox(
-        "I understand that this text will be sent to Anthropic's API, and I agree.",
+        "I understand that this text will be sent to Google's Gemini API, and I agree.",
         key=f"consent-{st.session_state['uploader_key']}")
     if st.button("Extract evidence", type="primary",
                  disabled=not (consent and api_key and pending)):
