@@ -317,7 +317,7 @@ def main() -> None:
         render_extraction_panel(readable, rq)
         st.divider()
 
-    model = get_model()
+    model = "gemini-2.5-flash"
     for fid, entry in processed:
         result = None
         if entry["parsed"]:
