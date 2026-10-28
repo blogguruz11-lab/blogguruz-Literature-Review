@@ -1,27 +1,8 @@
 
 """Gemini API client using the existing LLM interface."""
 
-from dataclasses import dataclass
-from typing import Protocol
 
-
-class LLMError(Exception):
-    def __init__(self, user_message: str):
-        self.user_message = user_message
-        super().__init__(user_message)
-
-
-@dataclass(frozen=True)
-class LLMReply:
-    text: str
-    truncated: bool = False
-
-
-class LLMClient(Protocol):
-    model: str
-
-    def complete(self, system: str, user: str, max_tokens: int) -> LLMReply: ...
-
+from core.llm import LLMError, LLMReply
 
 class GeminiLLM:
     def __init__(self, api_key: str, model: str, timeout: float = 120):
