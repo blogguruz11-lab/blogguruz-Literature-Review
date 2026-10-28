@@ -28,8 +28,8 @@ st.set_page_config(page_title="Literature review generator", layout="wide")
 
 CONSENT_NOTICE = (
     "When you click Extract, the text of the selected papers (without their reference lists) "
-    "and your research question, if any, are sent to Anthropic's Claude API to be analysed. "
-    "Do not use confidential or unpublished papers unless Anthropic's current data-handling and "
+    "and your research question, if any, are sent to Google's Gemini API to be analysed. "
+    "Do not use confidential or unpublished papers unless Google's current data-handling and "
     "retention terms for your type of API access are acceptable to you and to the paper's owners."
 )
 CHECK_CAVEAT = (
