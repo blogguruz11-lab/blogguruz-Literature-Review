@@ -37,8 +37,7 @@ class GeminiLLM:
 
             return LLMReply(text=text, truncated=truncated)
 
-        except Exception as exc:
-            raise LLMError(
-                f"Gemini API request failed ({type(exc).__name__}). "
-                "Check the API key, model name, and quota."
-            ) from None
+       except Exception as exc:
+    raise LLMError(
+        f"Gemini API request failed: {str(exc)[:500]}"
+    ) from None
