@@ -32,7 +32,7 @@ _MESSAGES = {
     "RateLimitError": "The API rate limit was reached. Wait a minute and try again.",
     "APITimeoutError": "The request to the API timed out. Try again.",
     "APIConnectionError": "Could not reach the API. Check the internet connection.",
-    "BadRequestError": "The API rejected the request. The paper may be too large for the model.",
+    "BadRequestError": "Anthropic rejected the request. Check the model name, input size, and request settings.",
     "InternalServerError": "The API service had a problem. Try again shortly.",
     "OverloadedError": "The API service is busy. Try again shortly.",
 }
