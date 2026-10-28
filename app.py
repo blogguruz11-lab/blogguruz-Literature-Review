@@ -236,10 +236,9 @@ def render_paper(fid: str, entry: dict, result: ExtractionResult | None) -> None
 
 def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) -> None:
     st.subheader("Extract evidence")
-  model = "gemini-2.5-flash"
-  api_key = get_secret("GEMINI_API_KEY")
+    model = "gemini-2.5-flash"
+    api_key = get_secret("GEMINI_API_KEY")
     extractions = st.session_state["extractions"]
-
     pending, seen = [], set()
     for fid, entry in readable:
         parsed = entry["parsed"]
