@@ -69,7 +69,7 @@ def _read_item(raw, name: str, issues: list[str]) -> dict | None:
     if isinstance(raw, dict):
         text, page, excerpt = raw.get("text"), raw.get("page"), raw.get("excerpt")
         ok = (
-            isinstance(text, str) and text.strip() and len(text) <= config.MAX_ITEM_TEXT_CHARS
+           isinstance(text, str) and text.strip() and len(text) <= getattr(config, "MAX_ITEM_TEXT_CHARS", 10000)
             and isinstance(excerpt, str) and excerpt.strip()
             and len(excerpt) <= config.MAX_EXCERPT_CHARS
             and isinstance(page, int) and not isinstance(page, bool)
