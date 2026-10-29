@@ -180,22 +180,24 @@ def render_section(parsed, title: str, items: list[EvidenceItem], missing_text: 
     st.write("")
 
 
+
 def render_extraction(parsed, result: ExtractionResult) -> None:
     if result.status == FAILED:
         st.error(result.message)
         return
+
     if result.status == SKIPPED:
         st.warning(result.message)
         return
+
     st.caption(f"Model: {result.model}. {result.reference_note}")
     if result.research_question:
-        st.caption("Research question used: "
-                   + result.research_question[:80] + ("…" if len(result.research_question) > 80 else ""))
-    verified, unverified = result.verified_count, result.unverified_count
-    (st.success if unverified == 0 else st.warning)(
-        f"{verified} of {verified + unverified} excerpts text-verified"
-        + ("" if unverified == 0 else f"; {unverified} need your attention.")
-    )
+        st.caption(
+            "Research question used: "
+            + result.research_question[:80]
+            + ("…" if len(result.research_question) > 80 else "")
+        )
+
     st.info(CHECK_CAVEAT)
     for issue in result.issues:
         st.warning(issue)
@@ -236,7 +238,7 @@ def render_paper(fid: str, entry: dict, result: ExtractionResult | None) -> None
 
 def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) -> None:
     st.subheader("Extract evidence")
-    model = "gemini-3.8-flash"
+    model = get_model()
     api_key = get_secret("GEMINI_API_KEY")
     extractions = st.session_state["extractions"]
     pending, seen = [], set()
@@ -256,8 +258,10 @@ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) ->
 
     st.info(CONSENT_NOTICE)
     if not api_key:
-        st.error("No API key found. Add ANTHROPIC_API_KEY to Streamlit secrets or set it as an "
-                 "environment variable (see the README). The key is never shown here.")
+        st.error(
+    "No API key found. Add GEMINI_API_KEY to Streamlit secrets "
+    "or set it as an environment variable. The key is never shown here."
+)
     if pending:
         total = sum(r.estimated_input_tokens for _, _, r in pending)
         st.write(f"{len(pending)} paper(s) will be sent. Rough size estimate: about {total:,} "
@@ -356,7 +360,7 @@ def main() -> None:
         render_extraction_panel(readable, rq)
         st.divider()
 
-    model = "gemini-2.5-flash"
+   model = get_model()
     for fid, entry in processed:
         result = None
         if entry["parsed"]:
