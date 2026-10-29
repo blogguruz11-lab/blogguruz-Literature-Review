@@ -302,21 +302,35 @@ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) ->
                 with st.spinner(
                     f"Extracting {entry['name']} ({n} of {len(pending)})…"
                 ):
-                    result = extractor.extract(entry["parsed"], rq)
+                     result = extractor.extract(entry["parsed"], rq)
                     extractions[key] = result
 
                     if result.status == FAILED:
+                        st.session_state["extraction_errors"][key] = (
+                            f"{entry['name']}: {result.message}"
+                        )
                         st.error(
                             f"Extraction failed for {entry['name']}: "
                             f"{result.message}"
                         )
+
                     elif result.status == SKIPPED:
+                        st.session_state["extraction_errors"].pop(key, None)
                         st.warning(
                             f"Extraction skipped for {entry['name']}: "
                             f"{result.message}"
                         )
 
+                    else:
+                        st.session_state["extraction_errors"].pop(key, None)
+
             except Exception as exc:
+                error_message = (
+                    f"{entry['name']}: "
+                    f"{type(exc).__name__}: {exc}"
+                )
+                st.session_state["extraction_errors"][key] = error_message
+
                 st.error(
                     f"Extraction crashed for {entry['name']}: "
                     f"{type(exc).__name__}: {exc}"
@@ -325,11 +339,6 @@ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) ->
                     f"Technical details — {entry['name']}"
                 ):
                     st.code(str(exc))
-
-            progress.progress(n / len(pending))
-
-        st.rerun()
-
 
 
 # ---------- page ----------
