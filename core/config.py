@@ -32,7 +32,7 @@ MAX_CHARS_PER_PAPER = 100_000
 # Model and extraction
 # ---------------------------------------------------------------------------
 MODEL_NAME = "claude-sonnet-4-5"
-MAX_OUTPUT_TOKENS = 4000
+MAX_OUTPUT_TOKENS = 8000
 
 MAX_FINDINGS = 8
 MAX_LIMITATIONS = 5
