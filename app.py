@@ -239,22 +239,32 @@ def render_paper(fid: str, entry: dict, result: ExtractionResult | None) -> None
 
 # ---------- extraction panel ----------
 
-def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) -> None:
+ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) -> None:
     st.subheader("Extract evidence")
-    def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) -> None:
-    st.subheader("Extract evidence")
+    errors = st.session_state.get("extraction_errors", {})
+    if errors:
+        st.warning("Some extraction errors need attention:")
+        for error_message in errors.values():
+            st.error(error_message)
+
     model = get_model()
     api_key = get_secret("GEMINI_API_KEY")
     extractions = st.session_state["extractions"]
     pending, seen = [], set()
+
     for fid, entry in readable:
         parsed = entry["parsed"]
         request = prepare_request(parsed, rq)
-        key = extraction_cache_key(parsed.sha256, model, config.EXTRACTION_VERSION,
-                                   request.research_question, config.MAX_CHARS_PER_PAPER)
+        key = extraction_cache_key(
+            parsed.sha256,
+            model,
+            config.EXTRACTION_VERSION,
+            request.research_question,
+            config.MAX_CHARS_PER_PAPER,
+        )
         too_long = size_limit_result(request, parsed, model)
         if too_long:
-            extractions[key] = too_long       # no API call, no cost
+            extractions[key] = too_long
             continue
         existing = extractions.get(key)
         if (existing is None or existing.status == FAILED) and key not in seen:
