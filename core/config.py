@@ -43,3 +43,4 @@ API_TIMEOUT_SECONDS = 120
 # Bump whenever the extraction prompt or output schema changes, so cached
 # results from older versions are not reused.
 EXTRACTION_VERSION = "1"
+MIN_EXCERPT_KEY_CHARS = 20
