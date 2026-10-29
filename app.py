@@ -55,15 +55,16 @@ def get_model() -> str:
 # ---------- state ----------
 
 def init_state() -> None:
-    st.session_state.setdefault("results", {})        # upload id -> parse result
-    st.session_state.setdefault("extractions", {})    # cache key -> ExtractionResult
-    st.session_state.setdefault("uploader_key", 0)    # bumping this resets uploader, question, consent
+    st.session_state.setdefault("results", {})
+    st.session_state.setdefault("extractions", {})
+    st.session_state.setdefault("uploader_key", 0)
     st.session_state.setdefault("extraction_errors", {})
-    
+
 
 def clear_everything() -> None:
     st.session_state["results"].clear()
     st.session_state["extractions"].clear()
+    st.session_state["extraction_errors"].clear()
     st.session_state["uploader_key"] += 1
     
 
