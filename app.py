@@ -273,17 +273,56 @@ def render_extraction_panel(readable: list[tuple[str, dict]], rq: str | None) ->
         key=f"consent-{st.session_state['uploader_key']}")
     if st.button("Extract evidence", type="primary",
                  disabled=not (consent and api_key and pending)):
+      
         try:
-            extractor = Extractor(GeminiLLM(api_key, model, config.API_TIMEOUT_SECONDS))
-        except LLMError as exc:
-            st.error(exc.user_message)
+            extractor = Extractor(
+                GeminiLLM(
+                    api_key,
+                    model,
+                    config.API_TIMEOUT_SECONDS
+                )
+            )
+        except Exception as exc:
+            st.error(f"Could not start Gemini: {type(exc).__name__}: {exc}")
+            with st.expander("Technical details"):
+                st.code(logging.exception if False else str(exc))
             return
+
         progress = st.progress(0.0)
+
         for n, (key, entry, _) in enumerate(pending, 1):
-            with st.spinner(f"Extracting {entry['name']} ({n} of {len(pending)})…"):
-                extractions[key] = extractor.extract(entry["parsed"], rq)
+            try:
+                with st.spinner(
+                    f"Extracting {entry['name']} ({n} of {len(pending)})…"
+                ):
+                    result = extractor.extract(entry["parsed"], rq)
+                    extractions[key] = result
+
+                    if result.status == FAILED:
+                        st.error(
+                            f"Extraction failed for {entry['name']}: "
+                            f"{result.message}"
+                        )
+                    elif result.status == SKIPPED:
+                        st.warning(
+                            f"Extraction skipped for {entry['name']}: "
+                            f"{result.message}"
+                        )
+
+            except Exception as exc:
+                st.error(
+                    f"Extraction crashed for {entry['name']}: "
+                    f"{type(exc).__name__}: {exc}"
+                )
+                with st.expander(
+                    f"Technical details — {entry['name']}"
+                ):
+                    st.code(str(exc))
+
             progress.progress(n / len(pending))
+
         st.rerun()
+
 
 
 # ---------- page ----------
