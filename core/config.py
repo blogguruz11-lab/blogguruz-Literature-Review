@@ -31,7 +31,7 @@ MAX_CHARS_PER_PAPER = 100_000
 # ---------------------------------------------------------------------------
 # Model and extraction
 # ---------------------------------------------------------------------------
-MODEL_NAME = "claude-sonnet-4-5"
+MODEL_NAME = "gemini-3.8-flash"
 MAX_OUTPUT_TOKENS = 8000
 
 MAX_FINDINGS = 8
