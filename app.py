@@ -118,7 +118,7 @@ def render_sidebar() -> None:
                    "server memory, so use the button below when you are done.")
         if st.button("Delete all session data", type="primary"):
             clear_everything()
-            st.rerun()
+            
         st.divider()
         st.subheader("Limits")
         st.write(f"Up to {config.MAX_FILES} files, {config.MAX_FILE_MB} MB and {config.MAX_PAGES} "
