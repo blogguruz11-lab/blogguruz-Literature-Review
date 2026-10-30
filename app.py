@@ -247,7 +247,7 @@ def render_paper(fid: str, entry: dict, result: ExtractionResult | None) -> None
         for error_message in errors.values():
             st.error(error_message)
 
-    model = get_model()
+       model = get_model()
     api_key = get_secret("GEMINI_API_KEY")
     extractions = st.session_state["extractions"]
     pending, seen = [], set()
